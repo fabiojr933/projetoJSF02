@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui = "http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>PRIMEIRO PROJETO</title>
+</h:head>
+
+
+<h:body>
+	<ui:include src="/Menu.xhtml"/>
+
+	<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('Administrador')}">
+		<h:messages infoStyle="color:green"/>
+	
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				<h:outputText value="Cadastro de Usuario" />
+			</f:facet>
+
+			<h:outputLabel value="Id" />
+			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+			
+			<h:outputLabel value="Foto"/>
+			<h:inputFile id="foto" value="#{pessoaBean.arquivofoto}" />
+			
+			<h:outputLabel value="Nome" />
+			<h:inputText value="#{pessoaBean.pessoa.nome}" pt:placeholder="Inforne o nome do usuario">
+				<f:validateLength minimum="5" maximum="120"/>
+			</h:inputText>
+			<h:outputLabel value="SobreNome" />
+			<h:inputText value="#{pessoaBean.pessoa.sobreNome}" pt:placeholder="Inforne o sobre nome do usuario"/>
+			<h:outputLabel value="Idade" />
+			<h:inputText value="#{pessoaBean.pessoa.idade}" pt:placeholder="Inforne a idade"/>
+
+			<h:outputLabel value="Sexo" />
+			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}"
+				required="false">
+				<f:selectItem itemValue="M" itemLabel="Maculino" />
+				<f:selectItem itemValue="F" itemLabel="Feminino" />
+			</h:selectOneMenu>
+			
+		
+			
+			<h:outputLabel value="Nascimento"/>
+			<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data errada">
+			<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-04:00"/>
+			</h:inputText>	
+				
+			<h:outputLabel value="Frameworks" />
+			<h:selectManyMenu id="campoFrameworks"
+				value="#{pessoaBean.pessoa.frameworks}" style="height: 150px">
+				<f:selectItem itemValue="Hibernate" />
+				<f:selectItem itemValue="Spring" />
+				<f:selectItem itemValue="JSF" />
+				<f:selectItem itemValue="JPA" />
+			</h:selectManyMenu>
+
+
+			<h:outputLabel value="Ativo" />
+			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
+			
+				
+			<h:outputLabel value="CEP"/>
+			<h:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Inforne o CEP">
+				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}" 
+				render="logradouro complemento bairro localidade uf unidade ibge" />				
+			</h:inputText>
+			
+			<h:outputLabel value="Lougradouro"/>
+			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro" pt:placeholder="Inforne o logradouro"/>
+			
+			<h:outputLabel value="Complemento"/>
+			<h:inputText value="#{pessoaBean.pessoa.complemento}" id="complemento" pt:placeholder="Inforne o complemento"/>
+			
+			<h:outputLabel value="Bairro"/>
+			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro" pt:placeholder="Inforne o bairro"/>
+			
+			<h:outputLabel value="Localidade"/>
+			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade" pt:placeholder="Inforne o localidade"/>
+			
+			<h:outputLabel value="Uf"/>
+			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf" pt:placeholder="Inforne a UF"/>
+			
+			<h:outputLabel value="Unidade"/>
+			<h:inputText value="#{pessoaBean.pessoa.unidade}" id="unidade" pt:placeholder="Inforne a Unidade"/>
+			
+			<h:outputLabel value="Ibge"/>
+			<h:inputText value="#{pessoaBean.pessoa.ibge}" id="ibge" pt:placeholder="Inforne o codigo IBGE"/>
+			
+			<h:outputLabel value="Login"/>
+				<h:inputText value="#{pessoaBean.pessoa.login}" pt:placeholder="Inforne o Login"/>
+			
+
+			<h:outputLabel value="Senha"/>
+				<h:inputSecret value="#{pessoaBean.pessoa.senha}" pt:placeholder="Inforne a senha"/>
+				
+				<h:outputLabel value="Perfil" />
+			<h:selectOneMenu id="campoPerfil" value="#{pessoaBean.pessoa.perfilUser}"
+				required="false">
+				<f:selectItem itemValue="Administrador" itemLabel="Administrador" />
+				<f:selectItem itemValue="Secretario" itemLabel="Secretario" />
+				<f:selectItem itemValue="Recepsionista" itemLabel="Recepsionista" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Nivel Programador"/>
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}" layout="pageDirection">
+				<f:selectItem itemValue="Junior" itemLabel="Junior"/>
+				<f:selectItem itemValue="Pleno" itemLabel="Pleno"/>
+				<f:selectItem itemValue="Senio" itemLabel="Senio"/>
+				<f:selectItem itemValue="Especialista" itemLabel="Especialista"/>
+			</h:selectOneRadio>
+		
+		
+			<h:outputLabel value="Linguagem"/>
+			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagem}">
+				<f:selectItem itemValue="JAVA" itemLabel="JAVA"/>
+				<f:selectItem itemValue="C#" itemLabel="C#"/>
+				<f:selectItem itemValue="C" itemLabel="C"/>
+				<f:selectItem itemValue="PHP" itemLabel="PHP"/>
+				<f:selectItem itemValue="C++" itemLabel="C++"/>
+				<f:selectItem itemValue="JAVASCRIPT" itemLabel="JAVASCRIPT"/>
+			</h:selectManyCheckbox>
+		
+			<h:outputLabel value="Estados"/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true" id="comboEstados" converter="estadoConverte">
+			
+				<f:selectItems value="#{pessoaBean.estados}"/>
+				<f:ajax event="change" execute="@this" render="comboCidade" 
+				listener="#{pessoaBean.carregaCidades}" />
+			</h:selectOneMenu>	
+			
+			<h:outputLabel value="Cidades"/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" immediate="true" id="comboCidade" converter="cidadeConverte">
+			
+				<f:selectItems value="#{pessoaBean.cidades}" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel/>
+			<h:panelGroup>
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}"
+					image="/resources/img/novo.png" title="NOVO" />
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"
+					image="/resources/img/salvar.png" title="SALVAR" />
+				<h:commandButton value="Remover" action="#{pessoaBean.remove}"
+					image="/resources/img/excluir.png" title="EXCLUIR" rendered="#{pessoaBean.permiteAcesso('Administrador')}"/>
+				<h:commandButton value="Limpar" action="#{pessoaBean.limpar}" />
+			</h:panelGroup>
+		</h:panelGrid>		
+				
+	
+			
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="2"
+			cellpadding="6">
+
+
+
+			<f:facet name="header">
+			Lista de Usuarios Cadastrados
+		</f:facet>
+			<h:column>
+				<f:facet name="header">Id</f:facet>
+				<h:outputText value="#{pessoa.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">SobreNome</f:facet>
+				<h:outputText value="#{pessoa.sobreNome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Idade</f:facet>
+				<h:outputText value="#{pessoa.idade}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.baixarFoto}">
+				<h:graphicImage width="60" height="60" value="#{pessoa.fotoIconBase64}"/>
+				<f:param name="filebaixarId" value="#{pessoa.id}"/>
+				</h:commandLink>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink value="" action="#{pessoaBean.editar}">
+					<f:setPropertyActionListener value="#{pessoa}"
+						target="#{pessoaBean.pessoa}" />
+					<h:graphicImage url="resources/img/editar2.png" title="Editar" />
+				</h:commandLink>
+			</h:column>
+
+			<h:column rendered="#{pessoaBean.permiteAcesso('Administrador')}">
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink value="" action="#{pessoaBean.remove}">
+					<f:setPropertyActionListener value="#{pessoa}"
+						target="#{pessoaBean.pessoa}" />
+					<h:graphicImage url="resources/img/excluir2.png" title="Exluir" />
+				</h:commandLink>
+			</h:column>
+
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>
